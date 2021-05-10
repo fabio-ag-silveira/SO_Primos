@@ -4,15 +4,15 @@
 #include <time.h>
 #include <semaphore.h>
 
-sem_t mutex;
+pthread_mutex_t mutex;
 
 using namespace std;
 
 int **vetor,
     THREAD = 5, // VALOR PREDEFINIDO, PARA CASO O USUÁRIO DIGITAR ERRADO.
     TAM = 5000,
-    quantidade_primos = 0,
-    sequencial = 0; // CONTADOR PARA OS PRIMOS.
+    quantidade_primos = 0,// CONTADOR PARA OS PRIMOS.
+    sequencial = 0;
 
 typedef struct
 {
@@ -53,9 +53,11 @@ void *conta_primos(void *parametro)
                 if(sequencial == 0){
                 quantidade_primos+=1;
                 }else{
-                    sem_wait(&mutex);
+                    pthread_mutex_lock (&mutex);
+
                     quantidade_primos+=1;
-                    sem_post(&mutex);
+
+                    pthread_mutex_unlock (&mutex);
                 }
             }
         }
@@ -80,8 +82,9 @@ int main ()
     time_t inicial_1,inicial_2, final_1,final_2;
     double t_1, t_2;
 
-    // inicia semaforo
-    sem_init(&mutex, 0, 1);
+    // inicia mutex
+     pthread_mutex_init(&mutex, NULL);
+
 
     // ID DA THREAD.
     pthread_t tid[THREAD+1];
@@ -172,6 +175,7 @@ int main ()
     {
         delete vetor[i];
     }
-    sem_destroy(&mutex);
+
+    pthread_mutex_destroy(&mutex);
     delete vetor;
 }
