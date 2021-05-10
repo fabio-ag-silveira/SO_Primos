@@ -7,7 +7,7 @@
 using namespace std;
 
 int **vetor,
-    THREAD = 5, // VALOR PREDEFINIDO, PARA CASO O USU¡RIO DIGITAR ERRADO.
+    THREAD = 5, // VALOR PREDEFINIDO, PARA CASO O USU√ÅRIO DIGITAR ERRADO.
     TAM = 5000,
     quantidade_primos = 0; // CONTADOR PARA OS PRIMOS.
 
@@ -84,7 +84,7 @@ int main ()
     // SEMENTE.
     srand(time(NULL));
 
-    // ALOCA«√O DINAMICA DE MEM”RIA.
+    // ALOCA√á√ÉO DINAMICA DE MEM√ìRIA.
     vetor = new int*[TAM];
 
     for(int i=0; i<TAM; i++)
@@ -96,7 +96,7 @@ int main ()
     {
         for(int j=0; j< TAM; j++)
         {
-            vetor[i][j] = rand()%1000;
+            vetor[i][j] = rand()%100;
         }
     }
 
