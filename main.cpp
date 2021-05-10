@@ -81,7 +81,7 @@ int main ()
     printf("\n2. Definir o numero de Threads (Threads > 1): \n");
     scanf("%d", &THREAD);
 
-    time_t inicial_1,inicial_2, final_1,final_2;
+    time_t inicial, final;
     double t_1, t_2;
 
     // inicia mutex
@@ -126,7 +126,7 @@ int main ()
     }
 
     // INICIO DO TIME SEQUENCIAL.
-    inicial_1 = time(0);
+    inicial = clock();
 
     // MODO SEQUENCIAL.
     parametro[THREAD].inicial_l = 0;
@@ -137,13 +137,13 @@ int main ()
 
     pthread_join(tid[THREAD], NULL);
 
-    final_1 = time(0);
-    t_1 = (final_1-inicial_1);
+    final = clock();
+    t_1 = ((double)(final-inicial))/(CLOCKS_PER_SEC);
     quantidade_primos_1 = quantidade_primos;
     quantidade_primos=0;
 
     // INICIO DO TIME.
-    inicial_2 = time(0);
+    inicial = clock();
 
 
     // DELIMITA O INICIO E O FIM DE CADA THREAD.
@@ -163,8 +163,8 @@ int main ()
         pthread_join(tid[i], NULL);
     }
 
-    final_2 = time(0);
-    t_2 = ((final_2-inicial_2));
+    final = clock();
+    t_2 = ((double)(final-inicial))/(CLOCKS_PER_SEC);
     quantidade_primos_2 = quantidade_primos;
 
     printf("\n(Sequencial)\nQuantidade de numeros primos = %d", quantidade_primos_1);
