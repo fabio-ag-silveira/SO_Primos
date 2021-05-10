@@ -2,7 +2,6 @@
 #include <pthread.h>
 #include <math.h>
 #include <time.h>
-#include <semaphore.h>
 
 pthread_mutex_t mutex;
 
@@ -72,9 +71,12 @@ void *conta_primos(void *parametro)
 
 int main ()
 {
-    int quantidade_primos_1, quantidade_primos_2;
+    int quantidade_primos_1, quantidade_primos_2, sair = 0;
+    
+    while(sair != 1){
 
-    printf("1. Definir o tamanho da matriz (p. ex. tamanho = 5000, matriz 5000x5000): \n");
+    printf("\n ------ O TAMANHO DA MATRIZ DEVE SER DIVISIVEL PELO NUMERO DE THREADS! ------ \n");
+    printf("\n1. Definir o tamanho da matriz (p. ex. tamanho = 5000, matriz 5000x5000): \n");
     scanf("%d", &TAM);
     printf("\n2. Definir o numero de Threads (Threads > 1): \n");
     scanf("%d", &THREAD);
@@ -114,7 +116,8 @@ int main ()
         }
     }
 
-    printf("\n\n\nVerificando numeros primos...\n\n");
+    printf("\n-----------------------------------------------------------------------------\n");
+    printf("\nVerificando numeros primos...\n\n");
 
     // INICIA AS THREADS.
     for(int i=0; i<= THREAD; i++)
@@ -168,8 +171,11 @@ int main ()
     printf("\nTempo de execucao: %.4lf s\n\n", t_1);
 
     printf("\n(Paralelo)\nQuantidade de numeros primos = %d", quantidade_primos_2);
-    printf("\nTempo de execucao: %.4lf s\n\n\n\n", t_2);
+    printf("\nTempo de execucao: %.4lf s\n\n-----------------------------------------------------------------------------\n", t_2);
 
+    printf("\nSair?(1 - Sim, 0 - Nao) ");
+    scanf("%d", &sair);
+        
     // DESALOCA MEMORIA.
     for(int i=0; i<TAM; i++)
     {
@@ -178,4 +184,5 @@ int main ()
 
     pthread_mutex_destroy(&mutex);
     delete vetor;
+    }
 }
